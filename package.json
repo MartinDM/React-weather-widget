@@ -1,0 +1,17 @@
+{
+  "name": "react-weather",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://martinonotts@bitbucket.org/martinonotts/react-weather.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/martinonotts/react-weather#readme"
+}
