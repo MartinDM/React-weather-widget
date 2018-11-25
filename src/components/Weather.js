@@ -1,23 +1,12 @@
-import React, { Component } from 'react'
+import React  from 'react';
 
-class Weather extends Component {
+const Weather = props => (
+    <div className="weatherform-feedback"> 
+        { props.error && props.erroMessage && <p><strong>Error:</strong> { props.errorMessage } </p> }
+        { props.city && props.country && <p><strong>Location:</strong> { props.city} , {props.country } </p> }
+        { props.temperature && <p><strong>Temperature:</strong> { props.temperature} C</p> }
+        { props.humidity && <p><strong>Humidity:</strong> { props.humidity} </p> }
+    </div>
+);
 
-    constructor(props) { 
-    super(props)
-         
-    }
- 
-    render() {
-        if (this.props.error || !this.props.city) {
-            return null
-        }
-        return (
-            <div className="weatherform-feedback">
-                <p>Weather in {this.props.city}, {this.props.country} is {this.props.description} with humidity of {this.props.humidity}</p>
-            </div>
-        )
-  }
-}
-
-export default Weather
- 
+export default Weather;

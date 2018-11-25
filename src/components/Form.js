@@ -3,33 +3,35 @@ import React, { Component } from 'react'
 class Form extends Component {
 
     constructor(props) {
-
-        super(props)
-        this.state = { 
-            city: '',
-            country: ''
-        }
+        super(props) 
     }
     
     handleChange = (e) => { 
         this.setState({
             [e.target.name]: e.target.value
         })
-      }
+    }
+
+    inputsPopulated = inputs => {
+        return inputs.some( input => input )
+    }
      
 
     render() { 
         // TODO: Autofill city or country
-        const city = this.state.city
-        const country = this.state.country
-        const bothPresent = city && country
+        const validInputs = this.inputsPopulated(this.props.city, this.props.country);
         return (
             <form onSubmit={this.props.getWeather}>
-                <p><strong>You're in: </strong>
-                    {this.state.city}
-                    {bothPresent ? ', ' : ''}
-                    {this.state.country}
-                 </p>
+            { (this.props.city && this.props.country) ? (
+                  <p><strong>You're in: </strong>
+                      {this.state.city}
+                      {validInputs ? ', ' : ''}
+                      {this.state.country}
+                    </p>
+              ) : (
+                  <p>{this.state.message}</p>
+               )
+            }
                 <div className="form-group">
                     <input type="text" name="city" onChange={this.handleChange}  value={this.state.city} className="form-control" placeholder="City" />
                 </div> 
