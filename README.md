@@ -7,8 +7,7 @@
 🚀 Published as a Surge page   
 http://mdm-weather-widget.surge.sh/
 
-
-![Screenshot](https://github.com/MartinDM/React-weather-widget/blob/master/public/screengrab.png?raw=true) 
+<a href="http://mdm-weather-widget.surge.sh">![Screenshot](https://github.com/MartinDM/React-weather-widget/blob/master/public/screengrab.png?raw=true) </a>
 
 ### Run it
 `npm i`  
