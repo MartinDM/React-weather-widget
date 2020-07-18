@@ -1,8 +1,10 @@
-## React Weather widget
+## React Weather widget ☀
 
-Just a sandbox project to work with and practice Class components. Consumes the [Open Weather Api](https://openweathermap.org/api "Weather API")
+⚒ Just a little sandbox project to play with React Class components, APIs, async, CSS Grid
 
-Published as a Surge page 🚀  
+☁ Consumes the [Open Weather Api](https://openweathermap.org/api "Weather API")
+
+🚀 Published as a Surge page   
 http://mdm-weather-widget.surge.sh/
 
 
@@ -15,5 +17,7 @@ Then
 
 ### TODO / Feature ideas
 * Refactor to include Hooks
+* Better validation feedback
 * Get users' current location
 * Refresh background photo
+* Animation
