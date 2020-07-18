@@ -1,11 +1,12 @@
 /* Martin's style*/
 :root, body {
     --main-bg-color: #313638;
+    --main-content: #333;
     --white: #E8E9EB;
     --cream: #E0DFD5;
     --whiteRGB: 250,250,250;
     --yellow: #E4B363;
-    --red: #EF6461;
+    --orange: #EF6461;
 }
 
 * {
@@ -19,57 +20,47 @@ body {
 
 body {
     background:  var(--main-bg-color);
-    color:  var(--main-bg-color);
-    border: 3px solid #333;
-    background: rgb(49,54,56);
-    background: rgb(49,54,56);
-    background: rgb(36,38,38);
+    color:  var(--main-content);
+    background: #333;
     background: linear-gradient(0deg, rgba(33,33,33,1) 0%, rgba(49,54,56,1) 80%);
 }
 
 #root {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: 230px;
-    grid-template-areas:
-    ". a a ."
-    ". a a .";
+    display: flex;
+    height: 90vh;
+    align-items: center;
+    justify-content: center;
 }
-
+ 
 .main {
-    grid-area: a;
-    grid-row: 2/3;
+    display: grid;
+    margin: 0 auto;
     background: var(--cream);
-    align-self: center;
-    justify-self: center;
-    width: 80vw;
-    max-width: 1100px;
     box-shadow: rgb(38, 38, 38) 0 25px 36px;
     background: var(--white) url("media/bg1.jpg") center center no-repeat;
 }
-
-    @media (min-width: 768px) {
-        .main {
-            background-size: cover;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-        }   
-    }
+@media (min-width: 768px) {
+    .main {
+        background-size: cover;
+        grid-template-columns: 1fr 1fr;
+        padding: 1.5em;
+    }   
+}
     
 .content {
     padding: 16px;
-    background: rgba(var(--whiteRGB), .7);
+    background: rgba(var(--whiteRGB), .8);
 }
     @media (min-width: 768px) {
         .content {
-            padding: 24px;;
+            padding: 24px;
             grid-column-start: 2;
+            min-height: 50vh;
             background: rgba(var(--whiteRGB), .9);
         }
     }
 
 /* Form */
-
 input[type="text"] {  
     color: var(--main-bg-color);
     font-weight: 300;
@@ -83,9 +74,9 @@ input[type="text"] {
 .form-control:focus {
     color: var(--main-bg-color);
     border: none;
-    border-bottom: 1px solid var(--yellow);
+    border-bottom: 1px solid var(--orange);
     box-shadow: none;
-    background: rgba(var(--whiteRGB), .7)
+    background: rgba(var(--whiteRGB), .7);
 }
 
 .form-control {
@@ -95,6 +86,15 @@ input[type="text"] {
 .title-panel {
     text-align: center;
     margin-bottom: 16px;
+}
+.title-panel__subtitle {
+    color: grey;
+    font-style: italic;
+}
+.title-panel__title{
+    font-style: italic;
+    font-weight: bold;
+    letter-spacing: -2px;
 }
 
 input[type="submit"],
@@ -108,15 +108,19 @@ input[type="submit"],
 }
 
 input[type="submit"]:focus {
-    border-color: var(--yellow);
-    box-shadow: var(--yellow) 0 1px 0;
+    border-color: var(--orange);
+    box-shadow: var(--orange) 0 1px 0;
     outline: 0;
 }
 
 /* Weather feedback */
+.weatherform-feedback p {
+    margin-bottom: 0;
+}
+
 .weatherform-feedback__content {
     border-radius: 12px;
     background: rgba(255,255,255,.5);
-    padding: 12px;
+    padding: 12px 0;
 }
 

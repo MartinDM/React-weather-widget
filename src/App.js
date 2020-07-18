@@ -4,7 +4,7 @@ import Form from './components/Form'
 import Weather from './components/Weather';
 import Message from './components/Message';
 
-const API_KEY = 'b5481847c2fbdcc96da8f27505c56e4c';
+const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
 const units = 'metric';
 
 class App extends Component {
@@ -13,118 +13,64 @@ class App extends Component {
     super(props);
     this.config = {
       errorMessageInput:  'Please enter a search',
-      errorMessageAPI:  'API error',
-      initialMessage: ''
+      errorMessageAPI:  'API error'
     };
-    this.state = {
-      temperature: undefined,
-      humidity: undefined,
-      city: undefined,
-      country: undefined,
-      description: undefined,
-      hasError: false,
-      errorMessage: undefined,
-      geo: undefined,
-      hasData: false
-    }
+    this.state = {}
   }
  
-/* 
-  handleValidation = (...inputs) => {
-    // Check that something is added to each input
-     const error = !inputs.every( input => input ); 
-     console.log(error);
-     return error;
-  } */
+  isValidResponse = (response) => response.cod === 200;
 
-
-  isValidResponse = (response) => { 
-    return (!response.cod === '404');
+  capitaliseFirst = (str) => {
+    if (  typeof str !== 'string' ) return '';
+    return str.charAt(0).toUpperCase() + str.slice(1);
   }
-
-
-  handleReturn = (weatherData) => {
-    if ( !this.isValidResponse() ) {
-        this.setState({
-          hasError: true,
-          errorMessage: weatherData.message + `. Keep searchin'`,
-          hasData: false
-        })
-        return
-    }
-
-    // If valid response, populate state with weather data
-    const data = weatherData;
-    this.setState({
-      temperature: data.main.temp,
-      humidity: data.main.humidity,
-      city: data.name,
-      country: data.sys.country,
-      description: data.weather[0].description,
-      geo: data.coord,
-      hasData: true
-    })
-  }
-
-/* 
-  validateSubmit = (e) => {
-    e.preventDefault();
-    const city = e.target.elements['city'].value;
-    const country = e.target.elements['country'].value;
-    if (this.isInvalidInput([city, country])) {
-      console.log('error :(');
-      this.setState({
-        hasData: false,
-        hasError: true,
-        errorMessage: this.config.errorMessageInput
-      })
-    }
-  } */
-
   
   getWeather = async (fields) => {
-    console.log('getting weather');
-    console.log(fields);
-    const city = fields.city.value;
-    const country = fields.country.value
-    const url = `http://api.openweathermap.org/data/2.5/weather?q=${city},${country}&appid=${API_KEY}&units=${units}`;
+    console.log('Getting weather');
+    const city = fields.city;
+    const url = `http://api.openweathermap.org/data/2.5/weather?q=${city},UK&appid=${API_KEY}&units=${units}`;
     
-    // Fetch returns a promise we're awaiting
+    // Await the data
     const api_call = await fetch(url)
-    const apiResponse = await api_call.json(); 
-    console.log(apiResponse)
-    this.handleReturn(apiResponse);
-  }
+    const response = await api_call.json();
+    this.setState({
+      loading: false,
+      data: response || null,
+      errorMessage: response.message ? `${ this.capitaliseFirst(response.message) }. Keep searching!` : null
+    })
+  };
 
-  render() { 
-    const hasResult = this.state.hasData;
-    let appOutput = undefined; 
-    if (hasResult) {
-      appOutput =  
-      <Weather 
-        temperature={this.state.temperature}
-        city={this.state.city} 
-        country={this.state.country} 
-        description={this.state.description} 
-        humidity={this.state.humidity}
-        geo={this.state.geo}
-      />
-    } else {
-      // if no data:
-      // * nothing submitted
-      // * invalid terms
-      const message = this.state.errorMessage;
+  render() {
+    // Will be Weather report or message message component
+    let appOutput;
+    let data = this.state.data;
+    // Check for invalid data returned
+    if (this.state.errorMessage || !data) { 
+      const { errorMessage } = this.state
       appOutput = 
-      <Message content={message}  />
+        <Message content={errorMessage}  />
+    } else {
+      appOutput =  
+        <Weather 
+          temperature={data.main.temp}
+          city={data.name} 
+          country={data.sys.country} 
+          description={ this.capitaliseFirst( data.weather[0].description) } 
+          humidity={data.main.humidity}
+        /> 
     }
-
+ 
     return (
     <div className="main">
       <div className="content">  
           <Titles />
           <div className="weather-panel">
             <Form getWeather={this.getWeather} validate  />
-            {appOutput}
+            <div className="weatherform-feedback"> 
+              <div className="weatherform-feedback__content">
+              {appOutput}
+              </div>
+            </div>
           </div>
       </div>
     </div>
@@ -133,4 +79,3 @@ class App extends Component {
 }
 
 export default App;
- 
